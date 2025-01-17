@@ -107,15 +107,15 @@ WSGI_APPLICATION = 'kg-backend.wsgi.application'
 import mongoengine
 
 DATABASES = {
+    # 'default': {
+    #     "ENGINE": 'django.db.backends.mysql',
+    #     'NAME': 'kg2',
+    #     'USER': 'root',
+    #     'PASSWORD': '1234',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': 3306,
+    # },
     'default': {
-        "ENGINE": 'django.db.backends.mysql',
-        'NAME': 'kg2',
-        'USER': 'root',
-        'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
-        'POST': 3306,
-    },
-    'KG': {
         'ENGINE': None,
     }
 }

@@ -65,6 +65,7 @@ def login(request):
         email = request.POST.get('email')
         if not (password and email):
             return json_response(201, '请输入完整数据')
+        return json_response(200, '登录成功', {"email": email, "password": password})
         if User.objects.filter(email=email):  # 账号存在
             encry = hashlib.md5()
             encry.update(password.encode())

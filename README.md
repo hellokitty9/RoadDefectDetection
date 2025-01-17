@@ -11,5 +11,6 @@ python manage.py runserver
 
 package.json下运行
 ```shell
+npm install
 npm run serve
 ```
