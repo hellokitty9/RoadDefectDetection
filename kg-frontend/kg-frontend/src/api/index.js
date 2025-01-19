@@ -7,10 +7,11 @@ export function setThis(that) {
 
 export function request(config) {
     const instance = axios.create({
-        // TODO(zhong): 在部署时，使用 nginx，这里需要修改为 baseURL: '/api'
-        // https://github.com/lidianzhong/KnowledgeGraph/issues/15
-        baseURL: 'http://localhost:8081/',
-        timeout: 50000,
+      // TODO(zhong): 在部署时，使用 nginx，这里需要修改为 baseURL: '/api'
+      // https://github.com/lidianzhong/KnowledgeGraph/issues/15
+      // baseURL: 'http://localhost:8081/',
+      baseURL: "http://8.148.21.230:10081/",
+      timeout: 50000,
     })
 
     // 后端验证token，有token(未登录)去验证，没token直接越过
@@ -26,7 +27,7 @@ export function request(config) {
         res => {
             console.log(res)
             switch (res.status) {
-                case 200: return res; break;
+                case 200: return res;
                 case 201: vm.$message.error('请输入完整数据'); break;
                 case 202: vm.$message.error('账号已存在'); break;
                 case 203: vm.$message.error('请求出错'); break;

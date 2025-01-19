@@ -1,25 +1,32 @@
 <template>
   <div class="nav-bar">
-    <nav-bar-item class="navname" path="/main/upload">
+    <!-- <nav-bar-item class="navname" path="/main/upload">
       <div slot="nav" class="nav_content">
         <i class="el-icon-upload iconfont sidebar-icon"></i
-        ><span class="text">文献管理</span>
+        ><span class="text">地图场景展示</span>
+      </div>
+    </nav-bar-item> -->
+
+    <nav-bar-item class="navname" path="/main/map">
+      <div slot="nav" class="nav_content">
+        <i class="el-icon-upload iconfont sidebar-icon"></i
+        ><span class="text">地图场景展示</span>
       </div>
     </nav-bar-item>
 
     <nav-bar-item class="navname" path="/main/answer">
       <div slot="nav" class="nav_content">
         <i class="el-icon-s-fold iconfont sidebar-icon"></i
-        ><span class="text">问答管理</span>
+        ><span class="text">道路缺陷分析</span>
       </div>
     </nav-bar-item>
-
+<!-- 
     <nav-bar-item class="navname" path="/main/graph">
       <div slot="nav" class="nav_content">
         <i class="el-icon-picture-outline-round iconfont sidebar-icon"></i
         ><span class="text">知识图谱</span>
       </div>
-    </nav-bar-item>
+    </nav-bar-item> -->
 
     <nav-bar-item
       class="navname"
