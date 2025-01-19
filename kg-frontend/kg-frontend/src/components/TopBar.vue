@@ -14,7 +14,7 @@
     </el-dropdown> -->
     <mallki
       class-name="mallki-text username"
-      text="HZAU知识工程与元学习团队"
+      text="道路缺陷检测平台"
       style="font-size: 20px"
     />
   </div>

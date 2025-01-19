@@ -27,19 +27,28 @@ const routes = [
         path: '/',
         redirect: '/login'
     },
+    // {
+    //     path: '/main',
+    //     redirect: '/main/upload',
+    // },
     {
         path: '/main',
-        redirect: '/main/upload',
+        redirect: '/main/map',
     },
     {
         path: '/main',
         name: 'Main',
         component: () => import('views/main/Main.vue'),
         children: [
+            // {
+            //     path: 'upload',
+            //     name: 'Upload',
+            //     component: () => import('views/main/upload/UploadFile.vue'),
+            // },
             {
-                path: 'upload',
-                name: 'Upload',
-                component: () => import('views/main/upload/UploadFile.vue'),
+                path: 'map',
+                name: 'Map',
+                component: () => import('views/main/map/Map.vue'),
             },
             {
                 path: 'graph',

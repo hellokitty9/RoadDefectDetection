@@ -140,7 +140,8 @@ export default {
         const res = await login({ email: this.email, password: this.password });
         this.$store.commit("updateUser", res.data.data);
         this.$message.success("登录成功");
-        this.$router.push("/main/upload");
+        // this.$router.push("/main/upload");
+        this.$router.push("/main/map");
       }
     },
     async register() {
