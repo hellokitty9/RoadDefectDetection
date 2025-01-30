@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Map',
+  name: 'Test',
   mounted() {
     // 创建地图实例
     var map = new BMapGL.Map("map");
@@ -31,6 +31,6 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 650px;
+  height: 700px;
 }
 </style>
