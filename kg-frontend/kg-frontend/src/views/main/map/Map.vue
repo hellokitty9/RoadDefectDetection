@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'MapTest1',
+  name: 'Map',
 
   components: {},
 
@@ -39,7 +39,7 @@ export default {
     var translateCallback = function (data){
       if(data.status === 0) {
         // Add markers to map
-        let totalDistance = MAX_DISTANCE;
+        let totalDistance = 0;
         let lastPoint = data.points[0];
 
         for (let i = 0; i < data.points.length; i++) {
@@ -48,12 +48,31 @@ export default {
           totalDistance += distance;
           
           if (totalDistance >= MAX_DISTANCE) {
-            map.addOverlay(new BMapGL.Marker(currentPoint));
-            map.addOverlay(new BMapGL.Polyline([lastPoint, currentPoint], {
+            // Message box
+            var opts = {
+              width : 200,     // 信息窗口宽度
+              height: 100,     // 信息窗口高度
+              title : "故宫博物院" , // 信息窗口标题
+              message:"这里是故宫"
+            }
+            var infoWindow = new BMapGL.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);  // 创建信息窗口对象
+            let midPoint = new BMapGL.Point(
+              (lastPoint.lng + currentPoint.lng) / 2,
+              (lastPoint.lat + currentPoint.lat) / 2
+            );
+            let pointMarker = new BMapGL.Marker(midPoint);
+            pointMarker.addEventListener("mouseover", function(){
+              map.openInfoWindow(infoWindow, midPoint); // 开启信息窗口
+            });
+
+            // Add point and line to map
+            map.addOverlay(pointMarker); // Add point to map
+            map.addOverlay(new BMapGL.Polyline([lastPoint, currentPoint], { // Add line to map
               strokeColor: i % 2 === 0 ? "red" : "blue",
               strokeWeight: 3,
               strokeOpacity: 0.5
             }));
+            
             totalDistance = 0;
             lastPoint = currentPoint;
           }
