@@ -52,26 +52,32 @@ export default {
             var opts = {
               width : 200,     // 信息窗口宽度
               height: 100,     // 信息窗口高度
-              title : "故宫博物院" , // 信息窗口标题
-              message:"这里是故宫"
+              title : "路线信息" , // 信息窗口标题
+              message:"路线信息"
             }
             var infoWindow = new BMapGL.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);  // 创建信息窗口对象
             let midPoint = new BMapGL.Point(
               (lastPoint.lng + currentPoint.lng) / 2,
-              (lastPoint.lat + currentPoint.lat) / 2
+              (lastPoint.lat + currentPoint.lat) / 2,
             );
-            let pointMarker = new BMapGL.Marker(midPoint);
-            pointMarker.addEventListener("mouseover", function(){
-              map.openInfoWindow(infoWindow, midPoint); // 开启信息窗口
-            });
+
+            // 在折线的端点添加标记点
+            let pointMarker = new BMapGL.Marker(lastPoint);
 
             // Add point and line to map
             map.addOverlay(pointMarker); // Add point to map
-            map.addOverlay(new BMapGL.Polyline([lastPoint, currentPoint], { // Add line to map
+            let polyLine = new BMapGL.Polyline([lastPoint, currentPoint], { // Add line to map
               strokeColor: i % 2 === 0 ? "red" : "blue",
               strokeWeight: 3,
-              strokeOpacity: 0.5
-            }));
+              strokeOpacity: 0.5,
+            });
+
+            // 为折线添加鼠标经过事件
+            polyLine.addEventListener("mouseover", function(e){
+              map.openInfoWindow(infoWindow, midPoint); // 在折线的中点显示信息窗口
+            });
+
+            map.addOverlay(polyLine);
             
             totalDistance = 0;
             lastPoint = currentPoint;
