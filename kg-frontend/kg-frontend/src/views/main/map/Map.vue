@@ -1,19 +1,29 @@
 <template>
-  <div id="map"></div>
+  <div>
+    <div id="map"></div>
+    <div ref="infoWindowTemplate" style="display: none">
+      <InfoWindow></InfoWindow>
+    </div>
+  </div>
 </template>
 
 <script>
+import InfoWindow from '@/components/InfoWindow.vue';
 export default {
   name: 'Map',
 
-  components: {},
+  components: {
+    InfoWindow,
+  },
 
   data() {
-    return {};
+    return {
+      map: null,
+      infoWindow: '路线信息',
+    };
   },
 
   mounted() {
-
     // 生成坐标点
     var WGSPoints = [];
     const baseX = 118.60054983;
@@ -26,58 +36,53 @@ export default {
     }
 
     // 创建地图实例
-    var map = new BMapGL.Map("map");
+    this.map = new BMapGL.Map("map");
     var originPoint = new BMapGL.Point(118.61821200, 31.66542117); // 创建点坐标
-    map.centerAndZoom(originPoint, 15);  // 初始化地图，设置中心点坐标和地图级别
-    map.enableScrollWheelZoom(true);      //开启鼠标滚轮缩放
-    map.addControl(new BMapGL.NavigationControl()); // 添加地图控件
-    map.addControl(new BMapGL.ScaleControl());
+    this.map.centerAndZoom(originPoint, 15);  // 初始化地图，设置中心点坐标和地图级别
+    this.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    this.map.addControl(new BMapGL.NavigationControl()); // 添加地图控件
+    this.map.addControl(new BMapGL.ScaleControl());
+
+    // 创建信息窗口实例
+    this.infoWindow = this.createInfoWindow();
 
     const MAX_DISTANCE = 100; // 两点之间的最大距离
 
     //坐标转换完后的回调函数
-    var translateCallback = function (data){
+    const translateCallback = (data) => {
       if(data.status === 0) {
-        // Add markers to map
         let totalDistance = 0;
         let lastPoint = data.points[0];
 
         for (let i = 0; i < data.points.length; i++) {
           let currentPoint = data.points[i];
-          let distance = map.getDistance(lastPoint, currentPoint);
+          let distance = this.map.getDistance(lastPoint, currentPoint);
           totalDistance += distance;
           
           if (totalDistance >= MAX_DISTANCE) {
-            // Message box
-            var opts = {
-              width : 200,     // 信息窗口宽度
-              height: 100,     // 信息窗口高度
-              title : "路线信息" , // 信息窗口标题
-              message:"路线信息"
-            }
-            var infoWindow = new BMapGL.InfoWindow("地址：北京市东城区王府井大街88号乐天银泰百货八层", opts);  // 创建信息窗口对象
+            // 计算中点
             let midPoint = new BMapGL.Point(
               (lastPoint.lng + currentPoint.lng) / 2,
-              (lastPoint.lat + currentPoint.lat) / 2,
+              (lastPoint.lat + currentPoint.lat) / 2
             );
 
-            // 在折线的端点添加标记点
+            // 添加标记点
             let pointMarker = new BMapGL.Marker(lastPoint);
+            this.map.addOverlay(pointMarker);
 
-            // Add point and line to map
-            map.addOverlay(pointMarker); // Add point to map
-            let polyLine = new BMapGL.Polyline([lastPoint, currentPoint], { // Add line to map
+            // 创建并添加折线
+            let polyLine = new BMapGL.Polyline([lastPoint, currentPoint], {
               strokeColor: i % 2 === 0 ? "red" : "blue",
               strokeWeight: 3,
               strokeOpacity: 0.5,
             });
 
             // 为折线添加鼠标经过事件
-            polyLine.addEventListener("mouseover", function(e){
-              map.openInfoWindow(infoWindow, midPoint); // 在折线的中点显示信息窗口
+            polyLine.addEventListener("mouseover", (e) => {
+              this.map.openInfoWindow(this.infoWindow, midPoint);
             });
 
-            map.addOverlay(polyLine);
+            this.map.addOverlay(polyLine);
             
             totalDistance = 0;
             lastPoint = currentPoint;
@@ -85,23 +90,47 @@ export default {
         }
       }
     }
-    setTimeout(function(){
-        var convertor = new BMapGL.Convertor();
-        var COORDINATES_WGS84 = 1; // WGS84 坐标
-        var COORDINATES_BD09 = 5; // BD09 坐标
-        convertor.translate(WGSPoints, COORDINATES_WGS84, COORDINATES_BD09, translateCallback)
+
+    setTimeout(() => {
+      var convertor = new BMapGL.Convertor();
+      var COORDINATES_WGS84 = 1; // WGS84 坐标
+      var COORDINATES_BD09 = 5; // BD09 坐标
+      convertor.translate(WGSPoints, COORDINATES_WGS84, COORDINATES_BD09, translateCallback);
     }, 1000);
-    
-    },
+  },
+
   methods: {
+  createInfoWindow() {
+    const content = this.$refs.infoWindowTemplate.innerHTML;
+    const opts = {
+      width: 340,  // 信息窗口宽度
+      height: 380, // 信息窗口高度
+      title: "路线信息", // 信息窗口标题
+      enableMessage: true, // 设置允许信息窗发送短息
+      enableAutoPan: true, // 是否开启信息窗口打开时地图自动移动（默认开启）
+      message: "",
+      enableDragging: true, // 是否开启信息窗口拖拽功能
+    }
+    const infoWindow = new BMapGL.InfoWindow(content, opts);
+    return infoWindow;
   }
 }
-
+}
 </script>
 
-<style scoped>
+<style>
 #map {
   width: 100%;
   height: 700px;
 }
+/* 修改信息窗口标题样式 */
+.BMap_bubble_title {
+  padding: 7px 0 0 10px;
+  font-size: large;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  /* border-bottom: 1px solid #eee; */
+}
+
 </style>
