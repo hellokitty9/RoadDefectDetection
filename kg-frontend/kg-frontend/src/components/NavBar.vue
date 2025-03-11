@@ -20,13 +20,13 @@
         ><span class="text">道路缺陷分析</span>
       </div>
     </nav-bar-item>
-<!-- 
+
     <nav-bar-item class="navname" path="/main/graph">
       <div slot="nav" class="nav_content">
         <i class="el-icon-picture-outline-round iconfont sidebar-icon"></i
-        ><span class="text">知识图谱</span>
+        ><span class="text">数据编辑</span>
       </div>
-    </nav-bar-item> -->
+    </nav-bar-item>
 
     <nav-bar-item
       class="navname"

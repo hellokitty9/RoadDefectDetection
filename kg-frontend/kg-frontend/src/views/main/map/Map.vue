@@ -37,8 +37,8 @@ export default {
 
     // 创建地图实例
     this.map = new BMapGL.Map("map");
-    var originPoint = new BMapGL.Point(118.61821200, 31.66542117); // 创建点坐标
-    this.map.centerAndZoom(originPoint, 15);  // 初始化地图，设置中心点坐标和地图级别
+    var originPoint = new BMapGL.Point(118.61754983, 31.67399917); // 创建点坐标
+    this.map.centerAndZoom(originPoint, 16);  // 初始化地图，设置中心点坐标和地图级别
     this.map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
     this.map.addControl(new BMapGL.NavigationControl()); // 添加地图控件
     this.map.addControl(new BMapGL.ScaleControl());
@@ -121,16 +121,20 @@ export default {
 <style>
 #map {
   width: 100%;
-  height: 700px;
+  height: 650px;
 }
 /* 修改信息窗口标题样式 */
 .BMap_bubble_title {
-  padding: 7px 0 0 10px;
+  padding: 5px 0 0 10px;
   font-size: large;
   font-weight: bold;
   color: #333;
   text-align: left;
   /* border-bottom: 1px solid #eee; */
+}
+
+.BMap_bubble_content {
+  left: 3px;
 }
 
 </style>

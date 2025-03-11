@@ -1,10 +1,15 @@
 <template>
   <div id="infoWindow" class="infoWindow">
     <div class="info-image">
-      <img
-      id="imgDemo"
-      src="../assets/img/image_14-59-27-649.jpg"
-    />
+      <el-button-group class="button_left">
+        <el-button type="text" icon="el-icon-arrow-left" @click="handlePrevImage"></el-button>
+        <ImageViewer ref="imageComponent"></ImageViewer>
+        <!-- <img
+            id="imgDemo"
+            :src="images[currentIndex]"
+          /> -->
+        <el-button type="text" icon="el-icon-arrow-right" @click="handleNextImage"></el-button>
+      </el-button-group>
       <div class="massage">
         <div class="m_left">
           <ul>
@@ -23,20 +28,18 @@
             </ul>
         </div>
       </div>
-      <div class="div_btn">
-        <button class="btn" @click="edit">
-          <span>编辑</span>
-        </button>
-      </div>
+      <el-button type="primary" icon="el-icon-edit" class="edit_btn">编辑</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import ImageViewer from './Image.vue';
 export default {
   name: 'InfoWindow',
-  component: {},
-
+  components: {
+    ImageViewer,
+  },
   data() {
     return {
       origin: "118.61, 31.68",
@@ -49,6 +52,14 @@ export default {
       rms: "1.2",
     };
   },
+  methods: {
+    handlePrevImage() {
+      this.$refs.imageComponent.prevImage();
+    },
+    handleNextImage() {
+      this.$refs.imageComponent.nextImage();
+    },
+  },
 }
 </script>
 
@@ -59,6 +70,11 @@ export default {
     width: 320px;
     height: 100%;
     /* padding: 10px; */
+  }
+
+  .button_left {
+    display: flex;
+    justify-content: center;
   }
 
   .info-image img {
@@ -87,22 +103,14 @@ export default {
   }
 
   .massage ul{
-    padding-left: 2px;
+    padding-left: 10px;
   }
 
-  .div_btn {
-    display: flex;
-    justify-content: right;
-    width: auto;
-    padding: 0 15px 0 0;
-  }
-
-  .btn {
+  .edit_btn {
     display: flex;
     justify-content: center;
-    width: auto;
-    padding: 0 5px;
-    margin-top: 10px;
-    border: 1px solid #878787;
+    margin: 5px 0 0 240px;
+    padding: 8px 13px 8px 10px;
+    border-radius: 15px;
   }
 </style>
