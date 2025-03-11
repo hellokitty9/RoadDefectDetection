@@ -1,20 +1,16 @@
 <template>
   <div>
     <div id="map"></div>
-    <div ref="infoWindowTemplate" style="display: none">
-      <InfoWindow></InfoWindow>
-    </div>
   </div>
 </template>
 
 <script>
-import InfoWindow from '@/components/InfoWindow.vue';
+import innerInfoWindow from '@/components/InfoWindow.vue';
+import Vue from 'vue';
 export default {
   name: 'Map',
 
-  components: {
-    InfoWindow,
-  },
+  components: {},
 
   data() {
     return {
@@ -100,20 +96,36 @@ export default {
   },
 
   methods: {
-  createInfoWindow() {
-    const content = this.$refs.infoWindowTemplate.innerHTML;
-    const opts = {
-      width: 340,  // 信息窗口宽度
-      height: 380, // 信息窗口高度
-      title: "路线信息", // 信息窗口标题
-      enableMessage: true, // 设置允许信息窗发送短息
-      enableAutoPan: true, // 是否开启信息窗口打开时地图自动移动（默认开启）
-      message: "",
-      enableDragging: true, // 是否开启信息窗口拖拽功能
+    createInfoWindow() {
+      // 创建一个包装器div
+      const wrapper = document.createElement('div');
+      
+      // 创建新的Vue实例来挂载InfoWindow组件
+      const infoWindowComponent = new Vue({
+        render: h => h(innerInfoWindow)
+      }).$mount();
+      
+      // 将组件的DOM添加到包装器中
+      wrapper.appendChild(infoWindowComponent.$el);
+
+      const opts = {
+        width: 340,
+        height: 380,
+        title: "路线信息",
+        enableMessage: true,
+        enableAutoPan: true,
+        message: "",
+        enableDragging: true,
+      }
+
+      // 使用包装器的innerHTML作为内容创建信息窗口
+      const infoWindow = new BMapGL.InfoWindow(wrapper, opts);
+      
+      // 保存Vue实例的引用以便后续使用
+      infoWindow.vueInstance = infoWindowComponent;
+      
+      return infoWindow;
     }
-    const infoWindow = new BMapGL.InfoWindow(content, opts);
-    return infoWindow;
-  }
 }
 }
 </script>

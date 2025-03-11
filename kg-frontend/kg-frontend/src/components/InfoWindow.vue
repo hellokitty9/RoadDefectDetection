@@ -28,7 +28,7 @@
             </ul>
         </div>
       </div>
-      <el-button type="primary" icon="el-icon-edit" class="edit_btn">编辑</el-button>
+      <el-button type="primary" icon="el-icon-edit" class="edit_btn" @click="edit">编辑</el-button>
     </div>
   </div>
 </template>
@@ -59,11 +59,18 @@ export default {
     handleNextImage() {
       this.$refs.imageComponent.nextImage();
     },
+    edit() {
+      console.log('edit');
+    },
   },
 }
 </script>
 
 <style scoped>
+.button_left .el-button {
+  z-index: 1;
+  position: relative;
+}
   .infoWindow {
     display: flex;
     justify-content: center;

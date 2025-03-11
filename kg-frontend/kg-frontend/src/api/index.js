@@ -9,7 +9,7 @@ export function request(config) {
     const instance = axios.create({
       // TODO(zhong): 在部署时，使用 nginx，这里需要修改为 baseURL: '/api'
       // https://github.com/lidianzhong/KnowledgeGraph/issues/15
-      baseURL: 'http://localhost:8081/',
+      baseURL: 'http://117.72.53.173:8081/',
     //   baseURL: "http://8.148.21.230:10081/",
       timeout: 50000,
     })

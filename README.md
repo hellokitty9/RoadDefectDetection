@@ -17,3 +17,7 @@ package.json 下运行
 npm install
 npm run serve
 ```
+
+访问：
+前端：http://117.72.53.173:8082/
+后端：http://117.72.53.173:8081/
