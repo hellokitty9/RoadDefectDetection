@@ -50,10 +50,15 @@ const routes = [
                 name: 'Map',
                 component: () => import('views/main/map/Map.vue'),
             },
+            // {
+            //     path: 'graph',
+            //     name: 'Graph',
+            //     component: () => import('views/main/graph/Graph.vue'),
+            // },
             {
-                path: 'graph',
-                name: 'Graph',
-                component: () => import('views/main/graph/Graph.vue'),
+                path: 'edit',
+                name: 'Edit',
+                component: () => import('views/main/edit/Edit.vue'),
             },
             {
                 path: 'answer',
