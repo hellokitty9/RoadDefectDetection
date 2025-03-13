@@ -19,6 +19,8 @@ import ImageViewer from './ImageViewer.vue';
 import RoadData from './RoadData.vue';
 export default {
   name: 'InfoWindow',
+  // 传入 Map 的路由对象
+  props: ['router'],
   components: {
     ImageViewer,
     RoadData,
@@ -31,15 +33,21 @@ export default {
     handleNextImage() {
       this.$refs.imageComponent.nextImage();
     },
-    // edit() {
-    //   // 使用路由导航到编辑页面
-    //   this.$router.push({
-    //     name: 'Edit',
-    //     // 如果需要传递参数，可以使用 query 或 params
-    //     // query: { id: someId }
-    //   });
-    // },
+    edit() {
+      // 使用路由导航到编辑页面
+      this.$props.router.push({
+        name: 'Edit',
+        params: {
+          id: '1', // 传入路段 id
+        },
+      }).then(() => {
+        console.log('路由跳转成功');
+      }).catch(err => {
+        console.error('路由跳转失败', err);
+      });
+    },
   },
+  mounted() { },
 }
 </script>
 

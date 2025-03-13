@@ -59,6 +59,7 @@ const routes = [
                 path: 'edit',
                 name: 'Edit',
                 component: () => import('views/main/edit/Edit.vue'),
+                props: true, //启用 props 传参
             },
             {
                 path: 'answer',

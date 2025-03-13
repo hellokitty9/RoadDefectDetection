@@ -13,6 +13,13 @@
         ><span class="text">地图场景展示</span>
       </div>
     </nav-bar-item>
+    
+    <nav-bar-item class="navname" path="/main/edit">
+      <div slot="nav" class="nav_content">
+        <i class="el-icon-picture-outline-round iconfont sidebar-icon"></i
+        ><span class="text">相关数据编辑</span>
+      </div>
+    </nav-bar-item>
 
     <nav-bar-item class="navname" path="/main/answer">
       <div slot="nav" class="nav_content">
@@ -28,12 +35,6 @@
       </div>
     </nav-bar-item> -->
 
-    <nav-bar-item class="navname" path="/main/edit">
-      <div slot="nav" class="nav_content">
-        <i class="el-icon-picture-outline-round iconfont sidebar-icon"></i
-        ><span class="text">数据编辑</span>
-      </div>
-    </nav-bar-item>
 
     <nav-bar-item
       class="navname"

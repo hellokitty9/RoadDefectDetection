@@ -100,9 +100,13 @@ export default {
       // 创建一个包装器div
       const wrapper = document.createElement('div');
       
-      // 创建新的Vue实例来挂载InfoWindow组件
+      // 创建新的虚拟Vue实例来挂载InfoWindow组件
       const infoWindowComponent = new Vue({
-        render: h => h(innerInfoWindow)
+        render: h => h(innerInfoWindow, {
+          props: {
+            router: this.$router // 传递 $router 至 InfoWindow 组件
+          },
+        }),
       }).$mount();
       
       // 将组件的DOM添加到包装器中
